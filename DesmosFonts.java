@@ -198,7 +198,7 @@ public class DesmosFonts extends JFrame implements ActionListener {
 					total++;
 				}
 			}
-			else {System.out.println("Problematic command: " + ch); System.exit(-1);}
+			else if (ch != 'M') {System.out.println("Problematic command: " + ch); System.exit(-1);}
 			
 			next = nextCommand(d, next);
 		}
