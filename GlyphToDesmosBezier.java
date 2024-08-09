@@ -1,4 +1,3 @@
-// Converts the data value of SVG glyphs into Bezier curves and lines which can be pasted directly into Desmos
 
 import java.util.*;
 import javax.swing.*;
@@ -7,17 +6,17 @@ import java.awt.datatransfer.*;
 import java.io.*;
 import java.awt.event.*;
 
-public class GlyphToDesmosBezier extends JFrame implements ActionListener {
+public class DesmosFonts extends JFrame implements ActionListener {
 	
 	private ArrayList<String> glyphs;
 	private ArrayList<Integer> glyphIndexes;
 	
-	public GlyphToDesmosBezier() {
+	public DesmosFonts() {
 		
 		glyphs = parseGlyphs(chooseFile());
 		glyphIndexes = new ArrayList<Integer>();
 		
-		setTitle("SVG To Desmos Bezier: Glyph Selector");
+		setTitle("Desmos Fonts: Glyph Selector");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setPreferredSize(new Dimension(620, 500));
 		setResizable(false);
@@ -87,13 +86,12 @@ public class GlyphToDesmosBezier extends JFrame implements ActionListener {
 			System.exit(-1);
 		}
 		
-		new GlyphToDesmosBezier();
+		new DesmosFonts();
 	}
 	
 	// Returns the user's chosen SVG file
 	private static File chooseFile() {
 		
-		// Set up chooser
 		JFileChooser jfc = new JFileChooser();
 		jfc.setFileFilter(new javax.swing.filechooser.FileFilter() {public String getDescription() {return "SVG Images (*.svg)";} public boolean accept(File f) {if (f.isDirectory()) return true; else return f.getName().toLowerCase().endsWith(".svg");}});
 		int result = jfc.showOpenDialog(null);
@@ -141,7 +139,7 @@ public class GlyphToDesmosBezier extends JFrame implements ActionListener {
 		return out;
 	}
 	
-	// Processes the data in an SVG glyph tag into a Desmos expression
+	// Processes the data in an SVG glyph tag into a Desmos function
 	private static String processGlyph(String d) {
 		
 		char ch = d.charAt(d.indexOf("unicode=\"") + 9);
@@ -332,7 +330,7 @@ public class GlyphToDesmosBezier extends JFrame implements ActionListener {
 		return out + "\\right\\}";
 	}
 	
-	// Adds a new linear statement
+	// Adds a new linear segment
 	private static String addLine(String out, int count, int total, double[] start, double[] relEnd) {
 		
 		if (count != 1) out += ",\\ ";
